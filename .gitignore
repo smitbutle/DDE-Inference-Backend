@@ -1,0 +1,25 @@
+input_images/
+output_images/
+document-data-extraction-layoutlmv3-model/
+__pycache__/
+layoutlmv3-processor/
+venv/
+
+# Ignore specific file types
+*.md
+*.txt
+*.pdf
+*.ps1
+*.csv
+
+# Ignore specific directories
+tmp/
+vendor/
+.temp/
+
+# Ignore specific files
+.env
+documentdataextractor-16ad89fe2724.json
+
+# Ignore editor-specific files
+.vscode/
