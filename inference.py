@@ -10,8 +10,6 @@ from firebase_admin import credentials, storage
 cred = credentials.Certificate("./documentdataextractor-16ad89fe2724.json")
 firebase_admin.initialize_app(cred,{'storageBucket': 'gs://documentdataextractor.appspot.com'})
 
-username= "Smit"
-identifier="1"
 
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the bucket."""
@@ -132,7 +130,7 @@ def process_image(image):
 
     return image
 
-def batch_process(input_folder, output_folder):
+def batch_process(input_folder, output_folder,username,identifier):
     if os.path.exists("./data.csv"):
         os.remove("./data.csv")
     for filename in os.listdir(input_folder):
