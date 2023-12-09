@@ -7,7 +7,6 @@ venv/
 
 # Ignore specific file types
 *.md
-*.txt
 *.pdf
 *.ps1
 *.csv
