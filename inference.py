@@ -67,10 +67,10 @@ label2color = {
     "O": 'orange'
 }
 
-def write_to_csv(data, keys):
-    file_exists = os.path.isfile('data.csv')
+def write_to_csv(data, keys, username):
+    file_exists = os.path.isfile(username+".csv")
 
-    with open('data.csv', 'a', newline='') as file:
+    with open(username+".csv", 'a', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=keys)
 
         if not file_exists:
@@ -85,7 +85,7 @@ def write_to_csv(data, keys):
         writer.writerow(row_to_add)
 
 
-def process_image(image):
+def process_image(image,username):
     width, height = image.size
     encoding = local_processor(image, truncation=True, return_offsets_mapping=True, return_tensors="pt")
     offset_mapping = encoding.pop('offset_mapping')
@@ -124,15 +124,15 @@ def process_image(image):
 
     keys = ['BILLER', 'BILLER_ADDRESS', 'INVOICE_NUMBER', 'BILLER_POST_CODE', 'INVOICE_DATE', 'ABN', 'DUE_DATE', 'SUBTOTAL', 'GST', 'TOTAL']
 
-    write_to_csv(data, keys)
+    write_to_csv(data, keys,username)
 
     draw_predictions_on_image(image, true_predictions, true_boxes, label2color)
 
     return image
 
 def batch_process(input_folder, output_folder,username,identifier):
-    if os.path.exists("./data.csv"):
-        os.remove("./data.csv")
+    # if os.path.exists("./data.csv"):
+        
     for filename in os.listdir(input_folder):
         if filename.endswith(('.jpg', '.jpeg', '.png')):
             input_path = os.path.join(input_folder, filename)
@@ -140,16 +140,18 @@ def batch_process(input_folder, output_folder,username,identifier):
 
             with Image.open(input_path) as img:
                 
-                processed_img = process_image(img)
+                processed_img = process_image(img,username)
                 processed_img.save(output_path)
-                upload_blob("documentdataextractor.appspot.com", input_path, username+"/"+identifier+"/input/"+filename)
-                upload_blob("documentdataextractor.appspot.com", output_path, username+"/"+identifier+"/output/"+filename)
+                upload_blob("documentdataextractor.appspot.com", input_path, username+"/"+str(identifier)+"/input/"+filename)
+                upload_blob("documentdataextractor.appspot.com", output_path, username+"/"+str(identifier)+"/output/"+filename)
 
                 os.remove(input_path)
                 os.remove(output_path)
+                
     
-    upload_blob("documentdataextractor.appspot.com", "./data.csv", username+"/"+identifier+"/data.csv")
+    upload_blob("documentdataextractor.appspot.com", "./"+username+".csv", username+"/"+str(identifier)+"/"+username+".csv")
 
-    print("[Processing complete] Output saved to ", username+"/"+identifier)
+    print("[Processing complete] Output saved to ", username+"/"+str(identifier))
+    
 
     
