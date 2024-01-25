@@ -8,22 +8,22 @@
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
-   ```
+```bash
+git clone https://github.com/your-username/your-repository.git
+cd your-repository
+```
 
 2. Install dependencies:
 
-  ```bash
-  pip install -r requirements.txt
-  ```
+```bash
+pip install -r requirements.txt
+```
 3. API Endpoints:
 
-  ```bash
-  GET /: Home page of the application.
-  POST /upload: Endpoint to upload images and process them.
-  ```
+```bash
+GET /: Home page of the application.
+POST /upload: Endpoint to upload images and process them.
+```
 
 ## Use cases
 
